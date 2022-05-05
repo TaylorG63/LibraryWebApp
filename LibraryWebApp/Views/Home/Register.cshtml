@@ -1,0 +1,46 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model LibraryWebApp.Models.RegisterModel
+@{
+    ViewData["Title"] = "Register Page";
+}
+
+
+@using (Html.BeginForm("login", "home", FormMethod.Post))
+{
+    <form>
+        <div class="form-group">
+            <label for="Firstname">First Name</label>
+            @Html.TextBoxFor(m => m.FirstName, new { @AbandonedMutexException= "form-control", @placeholder = "First name"})
+            @Html.ValidationMessageFor(m=> m.FirstName, "", new {@class = "alert-danger"})
+        </div>
+
+        <div class="form-group">
+            <label for="Lastname">Last Name</label>
+            @Html.TextBoxFor(m => m.LastName, new { @AbandonedMutexException= "form-control", @placeholder = "Last Name"})
+            @Html.ValidationMessageFor(m=> m.LastName, "", new {@class = "alert-danger"})
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            @Html.TextBoxFor(m => m.Email, new { @AbandonedMutexException= "form-control", @placeholder = "Email"})
+            @Html.ValidationMessageFor(m=> m.Email, "", new {@class = "alert-danger"})
+        </div>
+
+        <div class="form-group">
+            <label for="Username">Username</label>
+            @Html.TextBoxFor(m => m.Username, new { @AbandonedMutexException= "form-control", @placeholder = "enter your username"})
+            @Html.ValidationMessageFor(m=> m.Username, "", new {@class = "alert-danger"})
+        </div>
+
+        <div class="form-group">
+            <label for="name">Password</label>
+            @Html.TextBoxFor(m => m.Password, new { @AbandonedMutexException= "form-control", @placeholder = "enter your password"})
+            @Html.ValidationMessageFor(m=> m.Password, "", new {@class = "alert-danger"})
+        </div>
+        <div>
+            <input type="submit" value="submit" class="btn-primary btn-primary">
+        </div>
+    </form>
+}
