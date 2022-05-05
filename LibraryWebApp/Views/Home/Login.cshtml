@@ -6,23 +6,49 @@
     ViewData["Title"] = "Login Page";
 }
 
-<h2>Login</h2>
+
 @using (Html.BeginForm("login", "home", FormMethod.Post))
 {
     <form>
-        <div class="form-group">
-            <label for="name">Username</label>
-            @Html.TextBoxFor(m => m.Username, new { @AbandonedMutexException= "form-control", @placeholder = "enter your username"})
-            @Html.ValidationMessageFor(m=> m.Username, "", new {@class = "alert-danger"})
-        </div>
-
-        <div class="form-group">
-            <label for="name">Password</label>
-            @Html.TextBoxFor(m => m.Password, new { @AbandonedMutexException= "form-control", @placeholder = "enter your password"})
-            @Html.ValidationMessageFor(m=> m.Password, "", new {@class = "alert-danger"})
-        </div>
-        <div>
-            <input type="submit" value="submit" class="btn-primary btn-primary">
+        <div class="d-flex justify-content-center">
+        <table>
+            <th>
+                <h2>Login</h2>
+            </th>
+            <tr>
+                <td class="form-group">
+                    <label for="name">Username</label>
+                </td>
+                <td class="form-group">
+                    @Html.TextBoxFor(m => m.Username, new { @AbandonedMutexException= "form-control", @placeholder = "enter your username"})
+                    @Html.ValidationMessageFor(m=> m.Username, "", new {@class = "alert-danger"})
+                </td>
+            </tr>
+            <tr>
+                <td class="form-group">
+                    <label for="name">Password</label>
+                </td>
+                <td class="form-group">
+                    @Html.TextBoxFor(m => m.Password, new { @AbandonedMutexException= "form-control", @placeholder = "enter your password"})
+                    @Html.ValidationMessageFor(m=> m.Password, "", new {@class = "alert-danger"})
+                </td>
+            </tr>
+            <tfoot>
+                <tr>
+                    <td class="form-group">
+                        <a class="nav-link ps-0" asp-area="" asp-controller="Home" asp-action="Register">Forgot Password?</a>
+                    </td>
+                    <td class="form-group">
+                        <a class="nav-link ps-0" asp-area="" asp-controller="Home" asp-action="Register">Need an account? Register here.</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="form-group">
+                        <input type="submit" value="submit" class="btn-primary btn-primary">
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
         </div>
     </form>
 }

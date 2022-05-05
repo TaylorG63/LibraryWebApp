@@ -17,19 +17,52 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                <div class="collapse d-sm-inline-flex justify-content-between">
+                    <div class="pt-2">
+                        <form action="">
+                            <input type="text" placeholder="Search" name="search" />
+                            <button type="submit">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                                </svg>
+                            </button>
+                        </form>
+                    </div>
+                    <ul class="navbar-nav nav justify-content-end">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Books</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Login">Login</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Authors</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Register">Register</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Login">Login/Register</a>
                         </li>
+
                     </ul>
                 </div>
+            </div>
+            
+        </nav>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav nav justify-content-center">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">My Page</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Register">Catalog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Register">CheckOut</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Register">Librarian Access</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Register">Administrator Access</a>
+                    </li>
+                </ul>
             </div>
         </nav>
     </header>
@@ -40,6 +73,26 @@
     </div>
 
     <footer class="border-top footer text-muted">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+                <div class="container-fluid">   
+                    <div class="d-sm-inline-flex justify-content-between">
+                        <ul class="navbar-nav nav justify-content-center justify-content-between gap-3">
+                            <li class="nav-item border rounded border-4">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">About Us</a>
+                            </li>
+                            <li class="nav-item border rounded border-4">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Careers</a>
+                            </li>
+                            <li class="nav-item border rounded border-4">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Donate</a>
+                            </li>
+                            <li class="nav-item border rounded border-4">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Contact Us</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
         <div class="container">
             &copy; 2022 - LibraryWebApp - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
