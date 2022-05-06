@@ -13,11 +13,13 @@ namespace LibraryWebApp.Controllers
             _logger = logger;
         }
 
+        #region HttpGet
+        [HttpGet]
         public IActionResult Index()
         {
             return View();
         }
-
+        [HttpGet]
         public IActionResult Privacy()
         {
             return View();
@@ -28,17 +30,32 @@ namespace LibraryWebApp.Controllers
         {
             return View();
         }
-        [HttpPost]
-        public IActionResult Login(LoginModel model )
-        {
-            return View();
-        }
-
         [HttpGet]
         public IActionResult Register()
         {
             return View();
         }
+
+        [HttpGet]
+        public IActionResult Books()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult Authors()
+        {
+            return View();
+        }
+        #endregion
+
+        #region HttpPost
+        [HttpPost]
+        public IActionResult Login(LoginModel model)
+        {
+            return View();
+        }
+
         [HttpPost]
         public IActionResult Register(RegisterModel register)
         {
@@ -50,6 +67,7 @@ namespace LibraryWebApp.Controllers
             }
             return View();
         }
+        #endregion
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
