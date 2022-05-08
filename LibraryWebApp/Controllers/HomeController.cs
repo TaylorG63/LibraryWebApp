@@ -1,6 +1,8 @@
-﻿using LibraryWebApp.Models;
+﻿using LibraryBusinessLogicLayer;
+using LibraryWebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+
 
 namespace LibraryWebApp.Controllers
 {
@@ -59,8 +61,10 @@ namespace LibraryWebApp.Controllers
         [HttpPost]
         public IActionResult Register(RegisterModel register)
         {
+            HomeBuisnessLogic _hbl = new HomeBuisnessLogic();
             if (ModelState.IsValid)
             {
+
                 //ToDo - finish code
                 //process and register the user
                 //insert user into the database
