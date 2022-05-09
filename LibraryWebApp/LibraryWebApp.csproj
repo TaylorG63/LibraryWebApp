@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\LibraryBusinessLogicLayer\LibraryBusinessLogicLayer.csproj" />
+    <ProjectReference Include="..\LibraryBuisnessLogicLayer\LibraryBuisnessLogicLayer.csproj" />
   </ItemGroup>
 
 </Project>

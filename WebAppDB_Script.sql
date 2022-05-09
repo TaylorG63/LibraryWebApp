@@ -40,7 +40,55 @@ USE [$(DatabaseName)];
 
 
 GO
-PRINT N'Creating Table [dbo].[Address]...';
+PRINT N'Dropping Foreign Key unnamed constraint on [dbo].[Author]...';
+
+
+GO
+ALTER TABLE [dbo].[Author] DROP CONSTRAINT [FK__Author__BirthLoc__32E0915F];
+
+
+GO
+PRINT N'Dropping Foreign Key unnamed constraint on [dbo].[Books]...';
+
+
+GO
+ALTER TABLE [dbo].[Books] DROP CONSTRAINT [FK__Books__Author__33D4B598];
+
+
+GO
+PRINT N'Dropping Foreign Key unnamed constraint on [dbo].[Books]...';
+
+
+GO
+ALTER TABLE [dbo].[Books] DROP CONSTRAINT [FK__Books__Genre__34C8D9D1];
+
+
+GO
+PRINT N'Dropping Foreign Key unnamed constraint on [dbo].[Books]...';
+
+
+GO
+ALTER TABLE [dbo].[Books] DROP CONSTRAINT [FK__Books__Publisher__35BCFE0A];
+
+
+GO
+PRINT N'Dropping Foreign Key unnamed constraint on [dbo].[Publisher]...';
+
+
+GO
+ALTER TABLE [dbo].[Publisher] DROP CONSTRAINT [FK__Publisher__Birth__36B12243];
+
+
+GO
+PRINT N'Dropping Foreign Key unnamed constraint on [dbo].[User]...';
+
+
+GO
+ALTER TABLE [dbo].[User] DROP CONSTRAINT [FK__User__Role__37A5467C];
+
+
+GO
+PRINT N'Starting rebuilding table [dbo].[Author]...';
 
 
 GO
@@ -48,32 +96,18 @@ SET ANSI_NULLS, QUOTED_IDENTIFIER OFF;
 
 
 GO
-CREATE TABLE [dbo].[Address] (
-    [AddressId] INT          NOT NULL,
-    [Address]   VARCHAR (50) NOT NULL,
-    [City]      VARCHAR (50) NOT NULL,
-    [Country]   VARCHAR (50) NOT NULL,
-    [State]     VARCHAR (2)  NULL,
-    [Zip]       VARCHAR (5)  NULL,
-    PRIMARY KEY CLUSTERED ([AddressId] ASC)
-);
-
-
-GO
-SET ANSI_NULLS, QUOTED_IDENTIFIER ON;
-
-
-GO
-PRINT N'Creating Table [dbo].[Author]...';
-
-
-GO
 SET ANSI_NULLS, QUOTED_IDENTIFIER OFF;
 
 
 GO
-CREATE TABLE [dbo].[Author] (
-    [AuthorId]      INT           NOT NULL,
+BEGIN TRANSACTION;
+
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+
+SET XACT_ABORT ON;
+
+CREATE TABLE [dbo].[tmp_ms_xx_Author] (
+    [AuthorId]      INT           IDENTITY (1, 1) NOT NULL,
     [FirstName]     VARCHAR (50)  NOT NULL,
     [LastName]      VARCHAR (50)  NULL,
     [DateOfBirth]   DATE          NOT NULL,
@@ -82,13 +116,41 @@ CREATE TABLE [dbo].[Author] (
     PRIMARY KEY CLUSTERED ([AuthorId] ASC)
 );
 
+IF EXISTS (SELECT TOP 1 1 
+           FROM   [dbo].[Author])
+    BEGIN
+        SET IDENTITY_INSERT [dbo].[tmp_ms_xx_Author] ON;
+        INSERT INTO [dbo].[tmp_ms_xx_Author] ([AuthorId], [FirstName], [LastName], [DateOfBirth], [BirthLocation], [Bio])
+        SELECT   [AuthorId],
+                 [FirstName],
+                 [LastName],
+                 [DateOfBirth],
+                 [BirthLocation],
+                 [Bio]
+        FROM     [dbo].[Author]
+        ORDER BY [AuthorId] ASC;
+        SET IDENTITY_INSERT [dbo].[tmp_ms_xx_Author] OFF;
+    END
+
+DROP TABLE [dbo].[Author];
+
+EXECUTE sp_rename N'[dbo].[tmp_ms_xx_Author]', N'Author';
+
+COMMIT TRANSACTION;
+
+SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
+
 
 GO
 SET ANSI_NULLS, QUOTED_IDENTIFIER ON;
 
 
 GO
-PRINT N'Creating Table [dbo].[Books]...';
+SET ANSI_NULLS, QUOTED_IDENTIFIER ON;
+
+
+GO
+PRINT N'Starting rebuilding table [dbo].[Books]...';
 
 
 GO
@@ -96,8 +158,18 @@ SET ANSI_NULLS, QUOTED_IDENTIFIER OFF;
 
 
 GO
-CREATE TABLE [dbo].[Books] (
-    [BookId]      INT           NOT NULL,
+SET ANSI_NULLS, QUOTED_IDENTIFIER OFF;
+
+
+GO
+BEGIN TRANSACTION;
+
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+
+SET XACT_ABORT ON;
+
+CREATE TABLE [dbo].[tmp_ms_xx_Books] (
+    [BookId]      INT           IDENTITY (1, 1) NOT NULL,
     [Title]       VARCHAR (50)  NOT NULL,
     [Description] VARCHAR (250) NOT NULL,
     [IsPaperBack] BIT           NOT NULL,
@@ -108,13 +180,43 @@ CREATE TABLE [dbo].[Books] (
     PRIMARY KEY CLUSTERED ([BookId] ASC)
 );
 
+IF EXISTS (SELECT TOP 1 1 
+           FROM   [dbo].[Books])
+    BEGIN
+        SET IDENTITY_INSERT [dbo].[tmp_ms_xx_Books] ON;
+        INSERT INTO [dbo].[tmp_ms_xx_Books] ([BookId], [Title], [Description], [IsPaperBack], [PublishDate], [Author], [Genre], [Publisher])
+        SELECT   [BookId],
+                 [Title],
+                 [Description],
+                 [IsPaperBack],
+                 [PublishDate],
+                 [Author],
+                 [Genre],
+                 [Publisher]
+        FROM     [dbo].[Books]
+        ORDER BY [BookId] ASC;
+        SET IDENTITY_INSERT [dbo].[tmp_ms_xx_Books] OFF;
+    END
+
+DROP TABLE [dbo].[Books];
+
+EXECUTE sp_rename N'[dbo].[tmp_ms_xx_Books]', N'Books';
+
+COMMIT TRANSACTION;
+
+SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
+
 
 GO
 SET ANSI_NULLS, QUOTED_IDENTIFIER ON;
 
 
 GO
-PRINT N'Creating Table [dbo].[Genre]...';
+SET ANSI_NULLS, QUOTED_IDENTIFIER ON;
+
+
+GO
+PRINT N'Starting rebuilding table [dbo].[Genre]...';
 
 
 GO
@@ -122,21 +224,57 @@ SET ANSI_NULLS, QUOTED_IDENTIFIER OFF;
 
 
 GO
-CREATE TABLE [dbo].[Genre] (
-    [GenreId]     INT           NOT NULL,
+SET ANSI_NULLS, QUOTED_IDENTIFIER OFF;
+
+
+GO
+BEGIN TRANSACTION;
+
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+
+SET XACT_ABORT ON;
+
+CREATE TABLE [dbo].[tmp_ms_xx_Genre] (
+    [GenreId]     INT           IDENTITY (1, 1) NOT NULL,
     [Name]        VARCHAR (50)  NOT NULL,
     [Description] VARCHAR (250) NULL,
     [IsFiction]   BIT           NOT NULL,
     PRIMARY KEY CLUSTERED ([GenreId] ASC)
 );
 
+IF EXISTS (SELECT TOP 1 1 
+           FROM   [dbo].[Genre])
+    BEGIN
+        SET IDENTITY_INSERT [dbo].[tmp_ms_xx_Genre] ON;
+        INSERT INTO [dbo].[tmp_ms_xx_Genre] ([GenreId], [Name], [Description], [IsFiction])
+        SELECT   [GenreId],
+                 [Name],
+                 [Description],
+                 [IsFiction]
+        FROM     [dbo].[Genre]
+        ORDER BY [GenreId] ASC;
+        SET IDENTITY_INSERT [dbo].[tmp_ms_xx_Genre] OFF;
+    END
+
+DROP TABLE [dbo].[Genre];
+
+EXECUTE sp_rename N'[dbo].[tmp_ms_xx_Genre]', N'Genre';
+
+COMMIT TRANSACTION;
+
+SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
+
 
 GO
 SET ANSI_NULLS, QUOTED_IDENTIFIER ON;
 
 
 GO
-PRINT N'Creating Table [dbo].[Publisher]...';
+SET ANSI_NULLS, QUOTED_IDENTIFIER ON;
+
+
+GO
+PRINT N'Starting rebuilding table [dbo].[Publisher]...';
 
 
 GO
@@ -144,20 +282,55 @@ SET ANSI_NULLS, QUOTED_IDENTIFIER OFF;
 
 
 GO
-CREATE TABLE [dbo].[Publisher] (
-    [PublisherId]   INT          NOT NULL,
+SET ANSI_NULLS, QUOTED_IDENTIFIER OFF;
+
+
+GO
+BEGIN TRANSACTION;
+
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+
+SET XACT_ABORT ON;
+
+CREATE TABLE [dbo].[tmp_ms_xx_Publisher] (
+    [PublisherId]   INT          IDENTITY (1, 1) NOT NULL,
     [Name]          VARCHAR (50) NULL,
     [BirthLocation] INT          NULL,
     PRIMARY KEY CLUSTERED ([PublisherId] ASC)
 );
 
+IF EXISTS (SELECT TOP 1 1 
+           FROM   [dbo].[Publisher])
+    BEGIN
+        SET IDENTITY_INSERT [dbo].[tmp_ms_xx_Publisher] ON;
+        INSERT INTO [dbo].[tmp_ms_xx_Publisher] ([PublisherId], [Name], [BirthLocation])
+        SELECT   [PublisherId],
+                 [Name],
+                 [BirthLocation]
+        FROM     [dbo].[Publisher]
+        ORDER BY [PublisherId] ASC;
+        SET IDENTITY_INSERT [dbo].[tmp_ms_xx_Publisher] OFF;
+    END
+
+DROP TABLE [dbo].[Publisher];
+
+EXECUTE sp_rename N'[dbo].[tmp_ms_xx_Publisher]', N'Publisher';
+
+COMMIT TRANSACTION;
+
+SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
+
 
 GO
 SET ANSI_NULLS, QUOTED_IDENTIFIER ON;
 
 
 GO
-PRINT N'Creating Table [dbo].[Role]...';
+SET ANSI_NULLS, QUOTED_IDENTIFIER ON;
+
+
+GO
+PRINT N'Starting rebuilding table [dbo].[Role]...';
 
 
 GO
@@ -165,19 +338,53 @@ SET ANSI_NULLS, QUOTED_IDENTIFIER OFF;
 
 
 GO
-CREATE TABLE [dbo].[Role] (
-    [RoleId]   INT          NOT NULL,
+SET ANSI_NULLS, QUOTED_IDENTIFIER OFF;
+
+
+GO
+BEGIN TRANSACTION;
+
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+
+SET XACT_ABORT ON;
+
+CREATE TABLE [dbo].[tmp_ms_xx_Role] (
+    [RoleId]   INT          IDENTITY (1, 1) NOT NULL,
     [RoleName] VARCHAR (50) NOT NULL,
     PRIMARY KEY CLUSTERED ([RoleId] ASC)
 );
 
+IF EXISTS (SELECT TOP 1 1 
+           FROM   [dbo].[Role])
+    BEGIN
+        SET IDENTITY_INSERT [dbo].[tmp_ms_xx_Role] ON;
+        INSERT INTO [dbo].[tmp_ms_xx_Role] ([RoleId], [RoleName])
+        SELECT   [RoleId],
+                 [RoleName]
+        FROM     [dbo].[Role]
+        ORDER BY [RoleId] ASC;
+        SET IDENTITY_INSERT [dbo].[tmp_ms_xx_Role] OFF;
+    END
+
+DROP TABLE [dbo].[Role];
+
+EXECUTE sp_rename N'[dbo].[tmp_ms_xx_Role]', N'Role';
+
+COMMIT TRANSACTION;
+
+SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
+
 
 GO
 SET ANSI_NULLS, QUOTED_IDENTIFIER ON;
 
 
 GO
-PRINT N'Creating Table [dbo].[User]...';
+SET ANSI_NULLS, QUOTED_IDENTIFIER ON;
+
+
+GO
+PRINT N'Starting rebuilding table [dbo].[User]...';
 
 
 GO
@@ -185,8 +392,18 @@ SET ANSI_NULLS, QUOTED_IDENTIFIER OFF;
 
 
 GO
-CREATE TABLE [dbo].[User] (
-    [UserId]    INT           NOT NULL,
+SET ANSI_NULLS, QUOTED_IDENTIFIER OFF;
+
+
+GO
+BEGIN TRANSACTION;
+
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+
+SET XACT_ABORT ON;
+
+CREATE TABLE [dbo].[tmp_ms_xx_User] (
+    [UserId]    INT           IDENTITY (1, 1) NOT NULL,
     [Role]      INT           NOT NULL,
     [FirstName] CHAR (25)     NOT NULL,
     [LastName]  CHAR (25)     NOT NULL,
@@ -196,6 +413,36 @@ CREATE TABLE [dbo].[User] (
     [Salt]      VARCHAR (MAX) NULL,
     PRIMARY KEY CLUSTERED ([UserId] ASC)
 );
+
+IF EXISTS (SELECT TOP 1 1 
+           FROM   [dbo].[User])
+    BEGIN
+        SET IDENTITY_INSERT [dbo].[tmp_ms_xx_User] ON;
+        INSERT INTO [dbo].[tmp_ms_xx_User] ([UserId], [Role], [FirstName], [LastName], [UserName], [Email], [Password], [Salt])
+        SELECT   [UserId],
+                 [Role],
+                 [FirstName],
+                 [LastName],
+                 [UserName],
+                 [Email],
+                 [Password],
+                 [Salt]
+        FROM     [dbo].[User]
+        ORDER BY [UserId] ASC;
+        SET IDENTITY_INSERT [dbo].[tmp_ms_xx_User] OFF;
+    END
+
+DROP TABLE [dbo].[User];
+
+EXECUTE sp_rename N'[dbo].[tmp_ms_xx_User]', N'User';
+
+COMMIT TRANSACTION;
+
+SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
+
+
+GO
+SET ANSI_NULLS, QUOTED_IDENTIFIER ON;
 
 
 GO
@@ -254,21 +501,6 @@ PRINT N'Creating Foreign Key unnamed constraint on [dbo].[User]...';
 GO
 ALTER TABLE [dbo].[User] WITH NOCHECK
     ADD FOREIGN KEY ([Role]) REFERENCES [dbo].[Role] ([RoleId]);
-
-
-GO
-PRINT N'Creating View [dbo].[Register]...';
-
-
-GO
-SET ANSI_NULLS, QUOTED_IDENTIFIER OFF;
-
-
-GO
-CREATE VIEW [dbo].[Register]
-	AS SELECT * FROM [User]
-GO
-SET ANSI_NULLS, QUOTED_IDENTIFIER ON;
 
 
 GO

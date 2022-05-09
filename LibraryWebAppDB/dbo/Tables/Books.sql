@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[Books]
 (
-	[BookId] INT NOT NULL PRIMARY KEY,
+	[BookId] INT NOT NULL PRIMARY KEY IDENTITY(1,1),
 	[Title] VARCHAR(50) NOT NULL,
 	[Description] VARCHAR(250) not null,
 	[IsPaperBack] BIT NOT NULL,

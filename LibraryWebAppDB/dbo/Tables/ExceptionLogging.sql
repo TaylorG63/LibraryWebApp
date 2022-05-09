@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[ExceptionLogging] (
-    [ExceptionLoggingID] INT             IDENTITY (1, 1) NOT NULL,
-    [StackTrace]         NVARCHAR (1000) NULL,
+    [ExceptionLoggingID] INT IDENTITY (1, 1) NOT NULL,
+    [StackTrace]         NVARCHAR (MAX) NULL,
     [Message]            NVARCHAR (100)  NOT NULL,
     [Source]             NVARCHAR (100)  NULL,
     [Url]                NVARCHAR (100)  NULL,

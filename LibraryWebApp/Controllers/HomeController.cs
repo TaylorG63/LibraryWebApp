@@ -1,4 +1,4 @@
-﻿using LibraryBusinessLogicLayer;
+﻿using static LibraryBuisnessLogicLayer.Processor.UserProccessor;
 using LibraryWebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -65,6 +65,7 @@ namespace LibraryWebApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                int recordsCreated = CreateUser(register.FirstName, register.LastName, register.Username, register.Email);
                 return RedirectToAction("Login");
             }
             return View();
