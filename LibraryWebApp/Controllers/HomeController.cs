@@ -53,21 +53,19 @@ namespace LibraryWebApp.Controllers
 
         #region HttpPost
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Login(LoginModel model)
         {
             return View();
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Register(RegisterModel register)
         {
-            HomeBuisnessLogic _hbl = new HomeBuisnessLogic();
             if (ModelState.IsValid)
             {
-
-                //ToDo - finish code
-                //process and register the user
-                //insert user into the database
+                return RedirectToAction("Login");
             }
             return View();
         }

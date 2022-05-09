@@ -135,5 +135,6 @@
     <Build Include="dbo\Tables\Genre.sql" />
     <Build Include="dbo\Tables\Publisher.sql" />
     <Build Include="dbo\Tables\Address.sql" />
+    <Build Include="dbo\Tables\Register.sql" />
   </ItemGroup>
 </Project>
