@@ -37,7 +37,13 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Authors">Authors</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Login">Login/Register</a>
+                            @if(true){
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Login">Login/Register</a>
+                            }
+                            else
+                            {
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="LogOut">LogOut</a>
+                            }
                         </li>
 
                     </ul>
@@ -49,19 +55,10 @@
             <div class="collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav nav justify-content-center">
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Ordering" asp-action="MyPage">My Page</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="My_Page" asp-action="Dashboard">My Page</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Ordering" asp-action="Catalog">Catalog</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Ordering" asp-action="CheckOut">CheckOut</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Librarian" asp-action="LibrarianHome">Librarian Access</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Administrator" asp-action="AdministratorHome">Administrator Access</a>
                     </li>
                 </ul>
             </div>
@@ -73,8 +70,9 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div>
+    <footer class="border-top footer fixed-bottom text-muted">
+        <div class="container">
+            
             <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
                     <div class="container-fluid">  
                         <div class="row align-items-start">

@@ -2,9 +2,10 @@
 
 namespace LibraryWebApp.Controllers
 {
-    public class LibrarianController : Controller
+    public class My_Page : Controller
     {
-        public IActionResult LibrarianHome()
+        [HttpGet]
+        public IActionResult Dashboard()
         {
             return View();
         }

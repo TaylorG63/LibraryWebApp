@@ -7,7 +7,6 @@ namespace LibraryBuisnessLogicLayer
     {
         public static string[] HashSalt(string password)
         {
-            byte[] varhashedBytes;
             var rng = new RNGCryptoServiceProvider();
             var salt = new byte[32];
             rng.GetBytes(salt);

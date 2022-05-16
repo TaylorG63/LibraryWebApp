@@ -2,9 +2,9 @@
 
 namespace LibraryWebApp.Controllers
 {
-    public class AdministratorController : Controller
+    public class Ordering : Controller
     {
-        public IActionResult AdministratorHome()
+        public IActionResult Catalog()
         {
             return View();
         }

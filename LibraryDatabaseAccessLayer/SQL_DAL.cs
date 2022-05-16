@@ -31,15 +31,8 @@ namespace LibraryDatabaseAccessLayer
             }
             catch (Exception ex)
             {
-                using (IDbConnection cbs = new SqlConnection(GetConnectionString()))
-                {
-                    DateTime _logDate = new DateTime();
-                    _logDate = DateTime.Now;
-                    string log = $"INSERT INTO [dbo].[ExceptionLogging] (StackTrace, Message, Source, LogDate)" +
-                          $@"VALUES (@StackTrace, '{ex.Message.Replace("'", "\"")}', @Source, '{_logDate.ToString("yyyy-MM-dd HH:mm:ss")}')";
-                    cbs.Execute(log, ex);
-                    return new List<T>();
-                }
+                ExceptionLogging(ex);
+                return new List<T>();
             }
         }
 
@@ -54,17 +47,9 @@ namespace LibraryDatabaseAccessLayer
             }
             catch (Exception ex)
             {
-                using (IDbConnection cbs = new SqlConnection(GetConnectionString()))
-                {
-                    DateTime _logDate = new DateTime();
-                    _logDate = DateTime.Now;
-                    string log = $"INSERT INTO [dbo].[ExceptionLogging] (StackTrace, Message, Source, LogDate)" +
-                          $@"VALUES (@StackTrace, '{ex.Message.Replace("'", "\"")}', @Source, '{_logDate.ToString("yyyy-MM-dd HH:mm:ss")}')";
-                    cbs.Execute(log, ex);
-                    return 0;
-                }
+                ExceptionLogging(ex);
+                return 0;
             }
-            
         }
 
         public static bool DeleteData<T>(string sql)
@@ -79,15 +64,20 @@ namespace LibraryDatabaseAccessLayer
             }
             catch (Exception ex)
             {
-                using (IDbConnection cbs = new SqlConnection(GetConnectionString()))
-                {
-                    DateTime _logDate = new DateTime();
-                    _logDate = DateTime.Now;
-                    string log = $"INSERT INTO [dbo].[ExceptionLogging] (StackTrace, Message, Source, LogDate)" +
-                          $@"VALUES (@StackTrace, '{ex.Message.Replace("'", "\"")}', @Source, '{_logDate.ToString("yyyy-MM-dd HH:mm:ss")}')";
-                    cbs.Execute(log, ex);
-                }
+                ExceptionLogging(ex);
                 return false;
+            }
+        }
+
+        public static void ExceptionLogging(Exception ex)
+        {
+            using (IDbConnection cnn = new SqlConnection(GetConnectionString()))
+            {
+                DateTime _logDate = new DateTime();
+                _logDate = DateTime.Now;
+                string log = $"INSERT INTO [dbo].[ExceptionLogging] (StackTrace, Message, Source, LogDate)" +
+                      $@"VALUES (@StackTrace, '{ex.Message.Replace("'", "\"")}', @Source, '{_logDate.ToString("yyyy-MM-dd HH:mm:ss")}')";
+                cnn.Execute(log, ex);
             }
         }
     }
