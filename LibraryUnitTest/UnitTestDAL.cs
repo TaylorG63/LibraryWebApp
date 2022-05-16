@@ -10,7 +10,7 @@ namespace LibraryUnitTest
     [TestClass]
     public class UnitTestDAL
     {
-        UserModel Test = new UserModel() {FirstName = "Bob", LastName="Ross", UserName="BobRoss", Email="TestEmail", Id=0, Role=1};
+        UserDTO Test = new UserDTO() {FirstName = "Bob", LastName="Ross", UserName="BobRoss", Email="TestEmail", Id=0, Role=1};
         [TestMethod]
         public void TestUserProccessorCreateUser()
         {
@@ -21,7 +21,7 @@ namespace LibraryUnitTest
         [TestMethod]
         public void TestUserProccessorLoadData()
         {
-            List<UserModel> _success = LoadUsers();
+            List<UserDTO> _success = LoadUsers();
             Test = _success[_success.Count-1];
             Assert.IsTrue(_success.Count > 0);
         }

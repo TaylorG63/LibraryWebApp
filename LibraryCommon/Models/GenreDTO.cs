@@ -1,6 +1,6 @@
 ﻿namespace LibraryWebApp.Models
 {
-    public class GenreModel
+    public class GenreDTO
     {
         public string Name { get; set; }
         public string Description { get; set; }

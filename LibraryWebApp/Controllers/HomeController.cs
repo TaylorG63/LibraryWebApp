@@ -69,7 +69,7 @@ namespace LibraryWebApp.Controllers
             {
                 if (CheckUserPass(model.Username, model.Password))
                 {
-                    UserModel _user = LoadUser(model.Username);
+                    UserDTO _user = LoadUser(model.Username);
                     HttpContext.Session.SetString(SessionUserName, _user.UserName);
                     HttpContext.Session.SetString(SessionFirstName, _user.FirstName);
                     HttpContext.Session.SetString(SessionLastName, _user.LastName);

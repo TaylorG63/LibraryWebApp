@@ -14,7 +14,7 @@ namespace LibraryBuisnessLogicLayer.Processor
         public static int CreateUser(string firstName, string lastName, string userName, string email, string password)
         {
             string[] hashSalt = Hasher.HashSalt(password);
-            UserModel data = new UserModel { FirstName = firstName, LastName = lastName, Email = email, UserName = userName, Password = hashSalt[0], Salt = hashSalt[1] };
+            UserDTO data = new UserDTO { FirstName = firstName, LastName = lastName, Email = email, UserName = userName, Password = hashSalt[0], Salt = hashSalt[1] };
             
             string sql = @"INSERT INTO [dbo].[User] (Role, FirstName, LastName, UserName, Email, Password, Salt)
                             values (@Role, @FirstName, @LastName, @UserName, @Email, @Password, @Salt)";
@@ -22,10 +22,10 @@ namespace LibraryBuisnessLogicLayer.Processor
             return SQL_DAL.CreateData(sql, data);
         }
 
-        public static int CreateUser(UserModel _model)
+        public static int CreateUser(UserDTO _model)
         {
             string[] hashSalt = Hasher.HashSalt(_model.Password);
-            UserModel data = new UserModel { FirstName = _model.FirstName, LastName = _model.LastName, Email = _model.Email, UserName = _model.UserName, Id = _model.Id, Role = _model.Role, Password = hashSalt[0], Salt = hashSalt[1] };
+            UserDTO data = new UserDTO { FirstName = _model.FirstName, LastName = _model.LastName, Email = _model.Email, UserName = _model.UserName, Id = _model.Id, Role = _model.Role, Password = hashSalt[0], Salt = hashSalt[1] };
 
             string sql = @"INSERT INTO [dbo].[User] (Role, FirstName, LastName, UserName, Email, Password, Salt)
                             values (@Role, @FirstName, @LastName, @UserName, @Email, @Password, @Salt)";
@@ -34,39 +34,39 @@ namespace LibraryBuisnessLogicLayer.Processor
         }
         #endregion
         #region Read
-        public static List<UserModel> LoadUsers()
+        public static List<UserDTO> LoadUsers()
         {
             string sql = @"SELECT Role, FirstName, LastName, UserName, Email
                             FROM [dbo].[User]";
-            return SQL_DAL.LoadData<UserModel>(sql);
+            return SQL_DAL.LoadData<UserDTO>(sql);
         }
 
-        public static UserModel LoadUser(string _userName)
+        public static UserDTO LoadUser(string _userName)
         {
             string sql = $@"SELECT Role, FirstName, LastName, UserName, Email, Password FROM [dbo].[User] WHERE [dbo].[User].UserName = '{_userName}'";
-            List<UserModel> data = SQL_DAL.LoadData<UserModel>(sql);
+            List<UserDTO> data = SQL_DAL.LoadData<UserDTO>(sql);
             return data[0];
         }
         #endregion
         #region Update
         #endregion
         #region Delete
-        public static bool DeleteUser(UserModel _user)
+        public static bool DeleteUser(UserDTO _user)
         {
             string sql = $"DELETE FROM [dbo].[User] WHERE UserId = {_user.Id}";
-            return SQL_DAL.DeleteData<UserModel>(sql);
+            return SQL_DAL.DeleteData<UserDTO>(sql);
         }
-        public static bool DeleteUserTest(UserModel _user)
+        public static bool DeleteUserTest(UserDTO _user)
         {
             string sql = $"DELETE FROM [dbo].[User] WHERE [dbo].[User].Email = '{_user.Email}'";
-            return SQL_DAL.DeleteData<UserModel>(sql);
+            return SQL_DAL.DeleteData<UserDTO>(sql);
         }
         #endregion
         public static bool CheckUserPass(string _userName, string _password)
         {
-            UserModel _login = new UserModel {UserName = _userName, Password = _password  };
+            UserDTO _login = new UserDTO {UserName = _userName, Password = _password  };
             string sql = $@"SELECT * FROM [dbo].[User] WHERE [dbo].[User].UserName = '{_userName}'";
-            List<UserModel> user = SQL_DAL.LoadData<UserModel>(sql);
+            List<UserDTO> user = SQL_DAL.LoadData<UserDTO>(sql);
             string hashSalt = Hasher.Hash(_password, user[0].Salt);
             return hashSalt == user[0].Password;
         }
@@ -74,7 +74,7 @@ namespace LibraryBuisnessLogicLayer.Processor
         public static List<string> GetUserNames()
         {
             string sql = @"SELECT UserName FROM [dbo].[User]";
-            List<UserModel> users = SQL_DAL.LoadData<UserModel>(sql);
+            List<UserDTO> users = SQL_DAL.LoadData<UserDTO>(sql);
             List<string> names = new List<string>();
             for (int i = 0; i < users.Count; i++)
             {

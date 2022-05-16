@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LibraryCommon.Models
 {
-    public class UserModel
+    public class UserDTO
     {
         public int Id { get; set; }
         public string FirstName { get; set; }
