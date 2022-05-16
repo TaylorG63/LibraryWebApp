@@ -36,14 +36,14 @@ namespace LibraryBuisnessLogicLayer.Processor
         #region Read
         public static List<UserDTO> LoadUsers()
         {
-            string sql = @"SELECT Role, FirstName, LastName, UserName, Email
+            string sql = @"SELECT UserId, Role, FirstName, LastName, UserName, Email
                             FROM [dbo].[User]";
             return SQL_DAL.LoadData<UserDTO>(sql);
         }
 
         public static UserDTO LoadUser(string _userName)
         {
-            string sql = $@"SELECT Role, FirstName, LastName, UserName, Email, Password FROM [dbo].[User] WHERE [dbo].[User].UserName = '{_userName}'";
+            string sql = $@"SELECT UserId, Role, FirstName, LastName, UserName, Email, Password FROM [dbo].[User] WHERE [dbo].[User].UserName = '{_userName}'";
             List<UserDTO> data = SQL_DAL.LoadData<UserDTO>(sql);
             return data[0];
         }
