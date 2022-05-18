@@ -29,7 +29,12 @@ namespace LibraryWebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                int recordsCreated = CreateAuthor(model.FirstName, model.LastName, model.DateOfBirth, 1, model.Bio);
+                int addressID = CreateAddress(model.Address, model.City, model.Country, model.State, model.ZipCode);
+                if (addressID != 0)
+                {
+                    int author = CreateAuthor(model.FirstName, model.LastName, model.DateOfBirth, addressID, model.Bio);
+                }
+                //int recordsCreated = CreateAuthor(model.FirstName, model.LastName, model.DateOfBirth, 1, model.Bio);
             }
             return View();
         }

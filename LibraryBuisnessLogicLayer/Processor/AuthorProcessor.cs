@@ -11,14 +11,15 @@ namespace LibraryBuisnessLogicLayer.Processor
     public static class AuthorProcessor
     {
         #region Create
-        public static int CreateAuthor(string firstName, string lastName, DateTime dateOfBirth, int birthLocation, string bio)
+        public static int CreateAuthor(string firstName, string lastName, DateOnly dateOfBirth, int birthLocation, string bio)
         {
             AuthorDTO data = new AuthorDTO { FirstName = firstName, LastName = lastName, DateOfBirth = dateOfBirth, BirthLocation = birthLocation, Bio = bio };
 
             string sql = $@"INSERT INTO [dbo].[Author] (FirstName, LastName, DateOfBirth, BirthLocation, Bio)
                             values (@FirstName, @LastName, @DateOfBirth, @BirthLocation, @Bio)";
-
-            return SQL_DAL.CreateData(sql, data);
+            SQL_DAL.CreateData(sql, data);
+            AuthorDTO author = LoadAuthor(data);
+            return author.Id;
         }
 
         public static int CreateAuthor(AuthorDTO _model)
@@ -43,6 +44,14 @@ namespace LibraryBuisnessLogicLayer.Processor
         {
             string sql = $@"SELECT AuthorId, FirstName, LastName, DateOfBirth, BirthLocation, Bio
                             FROM [dbo].[Author] WHERE [dbo].[Author].AuthorId = {id}";
+            List<AuthorDTO> data = SQL_DAL.LoadData<AuthorDTO>(sql);
+            return data[0];
+        }
+
+        public static AuthorDTO LoadAuthor(AuthorDTO author)
+        {
+            string sql = $@"SELECT AuthorId, FirstName, LastName, DateOfBirth, BirthLocation, Bio
+                            FROM [dbo].[Author] WHERE ([dbo].[Author].FirstName = '{author.FirstName}' AND [dbo].[Author].LastName = '{author.LastName}')";
             List<AuthorDTO> data = SQL_DAL.LoadData<AuthorDTO>(sql);
             return data[0];
         }
