@@ -24,11 +24,16 @@ namespace LibraryWebApp.Models
 
         [Display(Name = "User Name")]
         //[Remote(action: "DoesUserNameExist", controller: "HomeController", ErrorMessage ="User name already exists. Please enter a different user name.")]
+        [MinLength(8, ErrorMessage = "Password to short, must be longer then 8 characters")]
+        [StringLength(50, ErrorMessage = "Password to long, must be shorter then 50 characters")]
         [RegularExpression(@"^[a-zA-Z0-9]+$", ErrorMessage = "user name must be combination of letters and numbers only.")]
         public string Username { get; set; }
 
         [Display(Name = "Password")]
         [DataType(DataType.Password)]
+        [MinLength(8, ErrorMessage ="Password to short, must be longer then 8 characters")]
+        [StringLength(50, ErrorMessage ="Password to long, must be shorter then 50 characters")]
+        [RegularExpression(@"^[a-zA-Z0-9]+$", ErrorMessage = "user name must be combination of letters and numbers only.")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]

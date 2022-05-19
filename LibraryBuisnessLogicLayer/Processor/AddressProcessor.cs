@@ -11,14 +11,21 @@ namespace LibraryBuisnessLogicLayer.Processor
     public static class AddressProcessor
     {
         #region Create
-        public static int CreateAddress(string address, string city, string country, string state, string zip)
+        public static int CreateAddressWithIDReturn(string address, string city, string country, string state, string zip)
         {
-            AddressDTO data = new AddressDTO { Address = address, City = city, Country = country, State = state, Zip = zip };
+            if (LoadAddress(address, city, country, state, zip) == 0)
+            {
+                AddressDTO data = new AddressDTO { Address = address, City = city, Country = country, State = state, Zip = zip };
 
-            string sql = @"INSERT INTO [dbo].[Address] (Address, City, Country, State, Zip)
+                string sql = @"INSERT INTO [dbo].[Address] (Address, City, Country, State, Zip)
                             values (@Address, @City, @Country, @State, @Zip)";
-
-            return SQL_DAL.CreateData(sql, data);
+                SQL_DAL.CreateData(sql, data);
+                return LoadAddress(data);
+            }
+            else
+            {
+                return LoadAddress(address, city, country, state, zip);
+            }
         }
 
         public static int CreateAddress(AddressDTO _model)
@@ -45,6 +52,31 @@ namespace LibraryBuisnessLogicLayer.Processor
                             FROM [dbo].[Address] WHERE [dbo].[Address].AddressId = {id}";
             List<AddressDTO> data = SQL_DAL.LoadData<AddressDTO>(sql);
             return data[0];
+        }
+
+        public static int LoadAddress(AddressDTO address)
+        {
+            string sql = $@"SELECT AddressId, Address, City, Country, State, Zip
+                            FROM [dbo].[Address] WHERE 
+                            [dbo].[Address].Address = '{address.Address}' AND
+                            [dbo].[Address].City = '{address.City}' AND
+                            [dbo].[Address].Country = '{address.Country}' AND
+                            [dbo].[Address].State = '{address.State}' AND
+                            [dbo].[Address].Zip = '{address.Zip}'";
+            List<AddressDTO> data = SQL_DAL.LoadData<AddressDTO>(sql);
+            return data[0].AddressId;
+        }
+        public static int LoadAddress(string address, string city, string country, string state, string zip)
+        {
+            string sql = $@"SELECT AddressId, Address, City, Country, State, Zip
+                            FROM [dbo].[Address] WHERE 
+                            [dbo].[Address].Address = '{address}' AND
+                            [dbo].[Address].City = '{city}' AND
+                            [dbo].[Address].Country = '{country}' AND
+                            [dbo].[Address].State = '{state}' AND
+                            [dbo].[Address].Zip = '{zip}'";
+            List<AddressDTO> data = SQL_DAL.LoadData<AddressDTO>(sql);
+            return data[0].AddressId;
         }
         #endregion
         #region Update

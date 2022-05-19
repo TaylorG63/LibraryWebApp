@@ -11,12 +11,11 @@ namespace LibraryBuisnessLogicLayer.Processor
     public static class AuthorProcessor
     {
         #region Create
-        public static int CreateAuthor(string firstName, string lastName, DateOnly dateOfBirth, int birthLocation, string bio)
+        public static int CreateAuthor(string firstName, string lastName, DateTime dateOfBirth, int birthLocation, string bio)
         {
             AuthorDTO data = new AuthorDTO { FirstName = firstName, LastName = lastName, DateOfBirth = dateOfBirth, BirthLocation = birthLocation, Bio = bio };
-
-            string sql = $@"INSERT INTO [dbo].[Author] (FirstName, LastName, DateOfBirth, BirthLocation, Bio)
-                            values (@FirstName, @LastName, @DateOfBirth, @BirthLocation, @Bio)";
+            string _dateOfBirth = dateOfBirth.ToString();
+            string sql = $@"INSERT INTO [dbo].[Author] (FirstName, LastName, DateOfBirth, BirthLocation, Bio) values (@FirstName, @LastName, '{_dateOfBirth}', @BirthLocation, @Bio)";
             SQL_DAL.CreateData(sql, data);
             AuthorDTO author = LoadAuthor(data);
             return author.Id;
@@ -50,8 +49,7 @@ namespace LibraryBuisnessLogicLayer.Processor
 
         public static AuthorDTO LoadAuthor(AuthorDTO author)
         {
-            string sql = $@"SELECT AuthorId, FirstName, LastName, DateOfBirth, BirthLocation, Bio
-                            FROM [dbo].[Author] WHERE ([dbo].[Author].FirstName = '{author.FirstName}' AND [dbo].[Author].LastName = '{author.LastName}')";
+            string sql = $@"SELECT AuthorId, FirstName, LastName, DateOfBirth, BirthLocation, Bio FROM [dbo].[Author] WHERE ([dbo].[Author].FirstName = '{author.FirstName}' AND [dbo].[Author].LastName = '{author.LastName}')";
             List<AuthorDTO> data = SQL_DAL.LoadData<AuthorDTO>(sql);
             return data[0];
         }
