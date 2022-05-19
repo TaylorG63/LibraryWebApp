@@ -10,6 +10,8 @@ namespace LibraryWebApp.Controllers
 {
     public class My_Page : Controller
     {
+
+        #region Dashboards
         [HttpGet]
         public IActionResult Dashboard()
         {
@@ -19,6 +21,15 @@ namespace LibraryWebApp.Controllers
         {
             return View();
         }
+        public IActionResult Genre()
+        {
+            return View();
+        }
+        public IActionResult Books()
+        {
+            return View();
+        }
+        #endregion
         #region AddGenre
         [HttpGet]
         public IActionResult AddGenre()

@@ -15,8 +15,8 @@ namespace LibraryBuisnessLogicLayer.Processor
         {
             GenreDTO data = new GenreDTO {Name = name, Description = description, IsFiction = isFiction };
 
-            string sql = $@"INSERT INTO [dbo].[Genre] (FirstName, LastName, DateOfBirth, BirthLocation, Bio)
-                            values (@FirstName, @LastName, @DateOfBirth, @BirthLocation, @Bio)";
+            string sql = $@"INSERT INTO [dbo].[Genre] (Name, Description, IsFiction)
+                            values (@Name, @Description, @IsFiction)";
 
             return SQL_DAL.CreateData(sql, data);
         }
@@ -25,8 +25,8 @@ namespace LibraryBuisnessLogicLayer.Processor
         {
             GenreDTO data = new GenreDTO { Name = _model.Name, Description = _model.Description, IsFiction = _model.IsFiction};
 
-            string sql = $@"INSERT INTO [dbo].[Genre] (FirstName, LastName, DateOfBirth, BirthLocation, Bio)
-                            values (@FirstName, @LastName, @DateOfBirth, @BirthLocation, @Bio)";
+            string sql = $@"INSERT INTO [dbo].[Genre] (Name, Description, IsFiction)
+                            values (@Name, @Description, @IsFiction)";
 
             return SQL_DAL.CreateData(sql, data);
         }
