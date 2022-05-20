@@ -1,6 +1,6 @@
 ﻿namespace LibraryWebApp.Models
 {
-    public class BookCardDTO
+    public class BookCardModel
     {
         public string Title { get; set; }
         public string Description { get; set; }
