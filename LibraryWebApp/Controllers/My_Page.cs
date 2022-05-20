@@ -25,7 +25,7 @@ namespace LibraryWebApp.Controllers
         {
             return View();
         }
-        public IActionResult Books()
+        public IActionResult Book()
         {
             return View();
         }
@@ -49,9 +49,20 @@ namespace LibraryWebApp.Controllers
         }
         #endregion
         #region AddBook
+        [HttpGet]
         public IActionResult AddBook()
         {
-            List<BookDTO> books;
+            List<AuthorDTO> authors = LoadAuthores();
+            List<GenreDTO> genres = LoadGenrees();
+            genres.Insert(0, new GenreDTO { GenreId = 0, Name = "-- Select Genre --" });
+            ViewBag.Author = authors;
+            ViewBag.Genre = genres;
+            return View();
+        }
+        [HttpPost]
+        public IActionResult AddBook(BookDTO model)
+        {
+
             return View();
         }
         #endregion

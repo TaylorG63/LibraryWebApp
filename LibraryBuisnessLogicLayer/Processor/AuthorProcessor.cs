@@ -18,7 +18,7 @@ namespace LibraryBuisnessLogicLayer.Processor
             string sql = $@"INSERT INTO [dbo].[Author] (FirstName, LastName, DateOfBirth, BirthLocation, Bio) values (@FirstName, @LastName, '{_dateOfBirth}', @BirthLocation, @Bio)";
             SQL_DAL.CreateData(sql, data);
             AuthorDTO author = LoadAuthor(data);
-            return author.Id;
+            return author.AuthorId;
         }
 
         public static int CreateAuthor(AuthorDTO _model)

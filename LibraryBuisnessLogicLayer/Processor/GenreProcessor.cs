@@ -34,15 +34,13 @@ namespace LibraryBuisnessLogicLayer.Processor
         #region Read
         public static List<GenreDTO> LoadGenrees()
         {
-            string sql = @"SELECT GenreId, FirstName, LastName, DateOfBirth, BirthLocation, Bio
-                            FROM [dbo].[Genre]";
+            string sql = @"SELECT GenreId, Name, Description, IsFiction FROM [dbo].[Genre]";
             return SQL_DAL.LoadData<GenreDTO>(sql);
         }
 
         public static GenreDTO LoadGenre(int id)
         {
-            string sql = $@"SELECT GenreId, FirstName, LastName, DateOfBirth, BirthLocation, Bio
-                            FROM [dbo].[Genre] WHERE [dbo].[Genre].GenreId = {id}";
+            string sql = @"SELECT GenreId, Name, Description, IsFiction FROM [dbo].[Genre] WHERE [dbo].[Genre].GenreId = {id}";
             List<GenreDTO> data = SQL_DAL.LoadData<GenreDTO>(sql);
             return data[0];
         }

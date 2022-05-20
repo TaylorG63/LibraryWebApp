@@ -15,6 +15,7 @@ namespace LibraryWebApp.Models
         public string Address { get; set; }
         public string City { get; set; }
         public string Country { get; set; }
+        [StringLength(2, ErrorMessage = "State cannot be more then 2 digits long")]
         public string State { get; set; }
         [StringLength(5, ErrorMessage = "Zipcode cannot be more then 5 digits long")]
         public string ZipCode { get; set; }

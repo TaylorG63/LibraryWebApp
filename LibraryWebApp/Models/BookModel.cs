@@ -7,7 +7,7 @@
         public string Description { get; set; }
         public bool IsPaperBack { get; set; }
         public DateTime PublishDate { get; set; }
-        public AuthorModel Author { get; set; }
-        public GenreModel Genre { get; set; }
+        public AuthorDTO? Author { get; set; }
+        public GenreDTO? Genre { get; set; }
     }
 }
