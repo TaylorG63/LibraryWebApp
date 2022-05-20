@@ -53,6 +53,12 @@ namespace LibraryBuisnessLogicLayer.Processor
             List<AuthorDTO> data = SQL_DAL.LoadData<AuthorDTO>(sql);
             return data[0];
         }
+        public static AuthorDTO LoadAuthor(string search)
+        {
+            string sql = $@"SELECT AuthorId, FirstName, LastName, DateOfBirth, BirthLocation, Bio FROM [dbo].[Author] WHERE ([dbo].[Author].FirstName LIKE '%{search}%' OR [dbo].[Author].LastName LIKE '%{search}%')";
+            List<AuthorDTO> data = SQL_DAL.LoadData<AuthorDTO>(sql);
+            return data[0];
+        }
         #endregion
         #region Update
         #endregion

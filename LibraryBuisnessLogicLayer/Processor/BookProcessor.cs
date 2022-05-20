@@ -32,15 +32,19 @@ namespace LibraryBuisnessLogicLayer.Processor
         #region Read
         public static List<BookDTO> LoadBookes()
         {
-            string sql = @"SELECT BookId, Title, Description, IsPaperBack, PublishDate, Author, Genre, Publisher
+            string sql = @"SELECT BookId, Title, Description, IsPaperBack, PublishDate, Author, Genre
                             FROM [dbo].[Books]";
+            return SQL_DAL.LoadData<BookDTO>(sql);
+        }
+        public static List<BookDTO> LoadBookes(string search)
+        {
+            string sql = $@"SELECT BookId, Title, Description, IsPaperBack, PublishDate, Author, Genre FROM [dbo].[Books] WHERE [dbo].[Books].Title LIKE '%{search}%'";
             return SQL_DAL.LoadData<BookDTO>(sql);
         }
 
         public static BookDTO LoadBook(int id)
         {
-            string sql = $@"SELECT BookId, Title, Description, IsPaperBack, PublishDate, Author, Genre, Publisher
-                            FROM [dbo].[Books] WHERE [dbo].[Books].BookId = {id}";
+            string sql = $@"SELECT BookId, Title, Description, IsPaperBack, PublishDate, Author, Genre FROM [dbo].[Books] WHERE [dbo].[Books].BookId = {id}";
             List<BookDTO> data = SQL_DAL.LoadData<BookDTO>(sql);
             return data[0];
         }

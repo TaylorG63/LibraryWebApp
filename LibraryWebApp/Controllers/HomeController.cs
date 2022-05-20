@@ -26,6 +26,11 @@ namespace LibraryWebApp.Controllers
 
         #region HttpGet
         [HttpGet]
+        public IActionResult Search()
+        {
+            return View();
+        }
+        [HttpGet]
         public IActionResult Index()
         {
             return View();

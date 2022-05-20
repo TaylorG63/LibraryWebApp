@@ -10,36 +10,43 @@ namespace LibraryWebApp.Controllers
 {
     public class My_Page : Controller
     {
-
-        #region Dashboards
         [HttpGet]
         public IActionResult Dashboard()
         {
             return View();
         }
+        #region Librarian
         public IActionResult Author()
         {
+            Security();
             return View();
         }
         public IActionResult Genre()
         {
+            Security();
             return View();
         }
         public IActionResult Book()
         {
+            Security();
             return View();
         }
-        #endregion
+        public IActionResult Librarian()
+        {
+            Security();
+            return View();
+        }
         #region AddGenre
         [HttpGet]
         public IActionResult AddGenre()
         {
-
+            Security();
             return View();
         }
         [HttpPost]
         public IActionResult AddGenre(GenreModel genre)
         {
+            Security();
             if (ModelState.IsValid)
             {
                 CreateGenre(genre.Name, genre.Description, genre.IsFiction);
@@ -52,6 +59,7 @@ namespace LibraryWebApp.Controllers
         [HttpGet]
         public IActionResult AddBook()
         {
+            Security();
             List<AuthorDTO> authors = LoadAuthores();
             List<GenreDTO> genres = LoadGenrees();
             ViewBag.Author = authors;
@@ -61,6 +69,7 @@ namespace LibraryWebApp.Controllers
         [HttpPost]
         public IActionResult AddBook(BookDTO model)
         {
+            Security();
             List<AuthorDTO> authors = LoadAuthores();
             List<GenreDTO> genres = LoadGenrees();
             ViewBag.Author = authors;
@@ -77,11 +86,13 @@ namespace LibraryWebApp.Controllers
         [HttpGet]
         public IActionResult AddAuthor()
         {
+            Security();
             return View();
         }
         [HttpPost]
         public IActionResult AddAuthor(AuthorModel model)
         {
+            Security();
             if (ModelState.IsValid)
             {
                 int addressID = CreateAddressWithIDReturn(model.Address, model.City, model.Country, model.State, model.ZipCode);
@@ -94,5 +105,21 @@ namespace LibraryWebApp.Controllers
             return View();
         }
         #endregion
+        #endregion
+        #region Administrator
+
+        #endregion
+        public IActionResult? Security()
+        {
+            if (true) //this would be set up to detect the role of a session, if true, do nothing, if false redirect the webpage to an access denied page
+            {
+                return null;
+            }
+            else
+            {
+                return View();
+            }
+            
+        }
     }
 }
