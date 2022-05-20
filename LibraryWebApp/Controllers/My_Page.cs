@@ -54,7 +54,6 @@ namespace LibraryWebApp.Controllers
         {
             List<AuthorDTO> authors = LoadAuthores();
             List<GenreDTO> genres = LoadGenrees();
-            genres.Insert(0, new GenreDTO { GenreId = 0, Name = "-- Select Genre --" });
             ViewBag.Author = authors;
             ViewBag.Genre = genres;
             return View();
@@ -62,7 +61,15 @@ namespace LibraryWebApp.Controllers
         [HttpPost]
         public IActionResult AddBook(BookDTO model)
         {
-
+            List<AuthorDTO> authors = LoadAuthores();
+            List<GenreDTO> genres = LoadGenrees();
+            ViewBag.Author = authors;
+            ViewBag.Genre = genres;
+            if (ModelState.IsValid)
+            {
+                CreateBook(model.Title, model.Description, model.IsPaperBack, model.PublishDate, model.Author, model.Genre);
+                return RedirectToAction("Author");
+            }
             return View();
         }
         #endregion
