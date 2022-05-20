@@ -7,6 +7,7 @@ namespace LibraryDatabaseAccessLayer
 {
     public abstract class SQL_DAL
     {
+        static List<string> BannedKeyWords = new List<string>() {"drop", "table" };
         #region
         #if DEBUG
         #warning Connection String Hardcoded for Temp work
@@ -69,6 +70,17 @@ namespace LibraryDatabaseAccessLayer
             }
         }
 
+        public static bool BlackList(string input)
+        {
+            for (int i = 0; i < BannedKeyWords.Count; i++)
+            {
+                if (input.Contains(BannedKeyWords[i]))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
         public static void ExceptionLogging(Exception ex)
         {
             using (IDbConnection cnn = new SqlConnection(GetConnectionString()))

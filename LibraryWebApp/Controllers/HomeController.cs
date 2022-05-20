@@ -3,6 +3,7 @@ using LibraryWebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using LibraryCommon.Models;
+using static LibraryBuisnessLogicLayer.Processor.BookProcessor;
 using Microsoft.AspNetCore.Session;
 using Microsoft.AspNetCore.Http;
 
@@ -55,6 +56,7 @@ namespace LibraryWebApp.Controllers
         [HttpGet]
         public IActionResult Books()
         {
+            List<BookDTO> books = LoadBookes();
             return View();
         }
 
